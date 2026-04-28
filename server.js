@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,30 +15,22 @@ app.post('/contact', async (req, res) => {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: process.env.EMAIL_TO || process.env.EMAIL_USER,
-    subject: `New Quote Request from ${name}`,
-    text: `Name: ${name}\nPhone/Email: ${contact}\n\nMessage:\n${description}`,
-    html: `
-      <h2>New Quote Request — For Sure Floors</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Phone / Email:</strong> ${contact}</p>
-      <p><strong>What they need:</strong></p>
-      <p>${description.replace(/\n/g, '<br>')}</p>
-    `,
-  };
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   try {
-    await transporter.sendMail(mailOptions);
+    await resend.emails.send({
+      from: 'For Sure Floors <onboarding@resend.dev>',
+      to: process.env.EMAIL_TO || 'breedenox@gmail.com',
+      subject: `New Quote Request from ${name}`,
+      html: `
+        <h2>New Quote Request — For Sure Floors</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Phone / Email:</strong> ${contact}</p>
+        <p><strong>What they need:</strong></p>
+        <p>${description.replace(/\n/g, '<br>')}</p>
+      `,
+    });
+
     res.json({ success: true });
   } catch (err) {
     console.error('Email error:', err);
