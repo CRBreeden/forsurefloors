@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,12 +15,20 @@ app.post('/contact', async (req, res) => {
     return res.status(400).json({ error: 'All fields are required.' });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
   try {
-    await resend.emails.send({
-      from: 'For Sure Floors <onboarding@resend.dev>',
-      to: process.env.EMAIL_TO || 'forsurefloorsllc@gmail.com',
+    await transporter.sendMail({
+      from: `"For Sure Floors" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
       subject: `New Quote Request from ${name}`,
       html: `
         <h2>New Quote Request — For Sure Floors</h2>
