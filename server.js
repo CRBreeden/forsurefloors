@@ -20,7 +20,7 @@ app.post('/contact', async (req, res) => {
   try {
     await resend.emails.send({
       from: 'For Sure Floors <onboarding@resend.dev>',
-      to: process.env.EMAIL_TO || 'breedenox@gmail.com',
+      to: process.env.EMAIL_TO || 'forsurefloors@gmail.com',
       subject: `New Quote Request from ${name}`,
       html: `
         <h2>New Quote Request — For Sure Floors</h2>
