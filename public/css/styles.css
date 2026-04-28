@@ -519,21 +519,24 @@ section { padding: 80px 5%; }
 .cta-bg .section-sub { color: rgba(255,255,255,0.8); margin: 0 auto 36px; }
 .cta-form {
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
   max-width: 500px;
   margin: 0 auto;
 }
 .cta-input {
-  flex: 1;
-  min-width: 200px;
+  width: 100%;
   padding: 14px 18px;
   border-radius: 6px;
   border: none;
   font-family: 'Source Sans 3', sans-serif;
   font-size: 0.95rem;
   outline: none;
+  box-sizing: border-box;
+}
+.cta-textarea {
+  resize: vertical;
+  min-height: 110px;
 }
 .cta-submit {
   background: var(--navy);

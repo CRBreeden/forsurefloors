@@ -137,11 +137,14 @@
   <div class="section-inner" style="text-align:center">
     <div class="section-label" style="color:rgba(255,255,255,0.7)">Get Started Today</div>
     <div class="section-title">Ready for New Floors? Let's Talk.</div>
-    <div class="section-sub">Drop your number or email and we'll reach out within 24 hours to schedule your free in-home estimate. No pressure, ever.</div>
-    <div class="cta-form">
-      <input class="cta-input" type="text" placeholder="Your phone or email" />
-      <button class="cta-submit">Request Free Quote</button>
-    </div>
+    <div class="section-sub">Fill out the form and we'll reach out within 24 hours to schedule your free in-home estimate. No pressure, ever.</div>
+    <form class="cta-form" id="contact-form">
+      <input class="cta-input" type="text" id="cf-name" placeholder="Your name" required />
+      <input class="cta-input" type="text" id="cf-contact" placeholder="Phone number or email" required />
+      <textarea class="cta-input cta-textarea" id="cf-description" placeholder="Tell us what you're looking for (e.g. LVP in living room, ~400 sq ft)" required></textarea>
+      <button class="cta-submit" type="submit">Request Free Quote</button>
+    </form>
+    <p id="contact-msg" style="margin-top:16px;font-size:0.9rem;display:none;"></p>
     <p style="margin-top:16px;font-size:0.82rem;color:rgba(255,255,255,0.55)">Or call us directly: <strong style="color:#fff">(267) 438-9872</strong></p>
   </div>
 </section>
